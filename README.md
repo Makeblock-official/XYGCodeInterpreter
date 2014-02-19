@@ -1,4 +1,4 @@
-XYGCodeInterpreter
+GCode Interpreter For XY-Plotter
 ==================
 How To Use:
 
