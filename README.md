@@ -10,7 +10,7 @@ How To Use:
 
 4.Choose and Connect the Arduino Serial Port.
 
-5.Send Your GCode on the App's Panel,You can also load the txt file that contains GCodes(GCode_Demo.zip(585 Bytes) )
+5.Send Your GCode on the App's Panel,You can also load the txt file that contains GCodes(GCode_Demo)
 
 GCode Example:
 
