@@ -5,14 +5,14 @@
 
 // all thread leadscrew
 #define X_STEPS_PER_INCH 8000.0
-#define X_STEPS_PER_MM   3
+#define X_STEPS_PER_MM   8.772
 
 // ACME leadscrew
 //#define X_STEPS_PER_INCH 6400.0
 //#define X_STEPS_PER_MM   251.968
 
 #define Y_STEPS_PER_INCH 8000.0
-#define Y_STEPS_PER_MM   3
+#define Y_STEPS_PER_MM   8.772
 
 #define Z_STEPS_PER_INCH 8000.0
 #define Z_STEPS_PER_MM   3
@@ -20,7 +20,7 @@
 //our maximum feedrates in units/minute
 #define FAST_XY_FEEDRATE_INCH 20 //300
 #define FAST_Z_FEEDRATE_INCH  15
-#define FAST_XY_FEEDRATE_MM 360
+#define FAST_XY_FEEDRATE_MM 800
 #define FAST_Z_FEEDRATE_MM  360
 
 // Maximum acceleration in units/minute/second
