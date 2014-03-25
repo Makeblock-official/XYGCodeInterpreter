@@ -470,6 +470,7 @@ ISR(TIMER1_COMPA_vect) {
   // If finished, start next move
   if ( move_finished ) {
 
+    println("ok");
     // Make sure queue not being modified by
     // main routine and then advance
     if (!move_queue_lock_main) advance_move_queue();

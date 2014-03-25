@@ -21,6 +21,7 @@
 	import flash.utils.setInterval;
 	import flash.utils.setTimeout;
 	
+	import flash.events.ProgressEvent;
 	import avmplus.getQualifiedClassName;
 	
 	import fl.controls.Button;
@@ -55,6 +56,8 @@
 		private var _index:uint = 0;
 		private var _isSave:Boolean = false;
 		private var _isMusic:Boolean = false;
+		private var _isDone:Boolean = true;
+		private var _time:Number = 0;
 		public function AIRSerialGUI() {
 			// constructor code
 			Serial.enum(serial_list);
@@ -80,6 +83,7 @@
 					_serial = new Serial();
 					_serial.addEventListener(Event.OPEN,onCom);
 					_serial.addEventListener(ErrorEvent.ERROR,onError);
+					_serial.addEventListener(ProgressEvent.PROGRESS,onProgress);
 					_serial.port = listCb.selectedItem.label;
 					_serial.speed = 9600;
 					_serial.open();
@@ -138,14 +142,33 @@
 				startBt.label = "Start";
 			}
 		}
+		private function onProgress(evt:ProgressEvent):void{
+			
+			var s:String="";
+				while(_serial.bytesAvailable>0){
+					s+=String.fromCharCode(_serial.readByte());
+				}
+				
+				infoTxt.text = s;
+				if(infoTxt.text.indexOf("k")>-1||infoTxt.text.indexOf("o")>-1){
+					_isDone = true;
+				}
+		}
 		private function onTimer(evt:TimerEvent):void{
 			if(_isConnected){
+				
+				if(!_isDone){
+					return;
+				}
+				
 				if(startBt.label == "Stop"){
 					infoTxt.text = (_index+1)+":"+_listGCode[_index];
 					if(_listGCode[_index].indexOf("delay")>-1){
 						_timer.delay = Number(_listGCode[_index].split(" ")[1]);
 						_isMusic = true;
 					}else{
+						_isDone = false;
+						_time = new Date().time;
 						_serial.writeUTFBytes(""+_listGCode[_index]+"/n");
 					}
 					_index++;
@@ -162,6 +185,7 @@
 		private function onSendClick(evt:MouseEvent):void{
 			if(_isConnected){
 				_serial.writeUTFBytes(""+sendTxt.text+"/n");
+				_isDone = false;
 			}
 		}
 		private function serial_list( success:Boolean, systemPorts:Array):void{

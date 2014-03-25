@@ -191,7 +191,7 @@ package ws.equator.proto{
 		//Fields that need to implement IDataInput, IDataOutput
 		private var _endian:String;
 		private var _objectEncoding:uint;
-		
+		public var serialBytes:ByteArray;
 		public function set port( arg:String):void{
 			if( process !=null && process.running){
 				throw new Error( "Port is already opened");
@@ -268,10 +268,8 @@ package ws.equator.proto{
 		}
 		
 		protected function read( bytes:ByteArray):void{
-			if( buffer.length && buffer.length==buffer.position){
-				buffer.clear();
-			}
-			buffer.writeBytes( bytes, buffer.length, bytes.length);
+			buffer.clear();
+			buffer.writeBytes( bytes, 0, bytes.length);
 			dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS));
 		}
 		
@@ -289,7 +287,9 @@ package ws.equator.proto{
 			var bytes:ByteArray=new ByteArray();
 			process.standardOutput.readBytes( bytes);
 			_bytesRead+=bytes.length;
+			serialBytes = new ByteArray(bytes);
 			read( bytes);
+			
 		}
 				
 		private function processExit(ev:NativeProcessExitEvent):void{

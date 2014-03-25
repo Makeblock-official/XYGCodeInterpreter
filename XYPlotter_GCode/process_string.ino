@@ -313,6 +313,7 @@ void process_string(char instruction[], int size)
     case 91: // Incremental Positioning
       while (moving) {} // Do not try and do this while moving
       absMode = (lastGCode == 90) ? true : false;
+      println("ok");
       break;
 
     case 92: // Set absolute position - note that this must be G92 X?? Y?? Z?? and not just G92 alone which will in fact do nothing
@@ -323,6 +324,7 @@ void process_string(char instruction[], int size)
           current_move_ptr->target_steps[i] = current_steps[i] = units_based_constants[i] * floatVals[X_CODE_INDEX + i];
         }
       }
+      println("ok");
       break;
 
     default:
@@ -412,7 +414,6 @@ void process_string(char instruction[], int size)
   }
 
   //tell our host we're done
-  println("ok");
 }
 
 // Lookup table for calculating octant of circle - the two nybbles of each byte each contain a separate value
